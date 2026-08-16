@@ -21,7 +21,7 @@ const gifu = {
   appNameEn: 'Gifu-ben Quiz',
   bundleId: 'com.robonetc.dialectquiz.gifu',
   scheme: 'dialectquizgifu',
-  easProjectId: '',
+  easProjectId: '4663f573-80dd-443e-9809-bd9f3154489b',
   theme: {
     primary: '#2A5D8A', // nagara river blue
     secondary: '#E8B84B', // gifu chochin lantern gold

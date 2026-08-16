@@ -21,7 +21,7 @@ const hiroshima = {
   appNameEn: 'Hiroshima-ben Quiz',
   bundleId: 'com.robonetc.dialectquiz.hiroshima',
   scheme: 'dialectquizhiroshima',
-  easProjectId: '',
+  easProjectId: '1346ba07-2dfd-4a7b-a574-b2a6b11bdd7b',
   theme: {
     primary: '#C0392B', // もみじ饅頭の紅葉
     secondary: '#5D8AA8', // 牡蠣いかだの海

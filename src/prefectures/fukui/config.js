@@ -21,7 +21,7 @@ const fukui = {
   appNameEn: 'Fukui-ben Quiz',
   bundleId: 'com.robonetc.dialectquiz.fukui',
   scheme: 'dialectquizfukui',
-  easProjectId: '',
+  easProjectId: 'eb24a763-07a0-46eb-aad8-ca8edd3931db',
   theme: {
     primary: '#2C5F8A', // echizen coast sea blue
     secondary: '#E07A3E', // echizen crab orange

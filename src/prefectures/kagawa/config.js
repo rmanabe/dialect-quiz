@@ -21,7 +21,7 @@ const kagawa = {
   appNameEn: 'Kagawa-ben Quiz',
   bundleId: 'com.robonetc.dialectquiz.kagawa',
   scheme: 'dialectquizkagawa',
-  easProjectId: '',
+  easProjectId: 'ad6ee4c9-94fb-4870-8001-35873d179b43',
   theme: {
     primary: '#EADFC4', // うどんの生成り
     secondary: '#6B8E4E', // 小豆島オリーブの緑

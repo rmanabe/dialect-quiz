@@ -21,7 +21,7 @@ const hyogo = {
   appNameEn: 'Hyogo-ben Quiz',
   bundleId: 'com.robonetc.dialectquiz.hyogo',
   scheme: 'dialectquizhyogo',
-  easProjectId: '',
+  easProjectId: '39511c80-3522-45ff-a92a-a6576a6ba36a',
   theme: {
     primary: '#1E5AA8', // Kobe harbor blue
     secondary: '#E8B84B', // Nada sake-brewery gold

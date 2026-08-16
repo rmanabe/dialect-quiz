@@ -21,7 +21,7 @@ const ehime = {
   appNameEn: 'Ehime-ben Quiz',
   bundleId: 'com.robonetc.dialectquiz.ehime',
   scheme: 'dialectquizehime',
-  easProjectId: '',
+  easProjectId: 'cde277e8-42e5-483f-8ab3-7a4967196310',
   theme: {
     primary: '#F4A536', // みかんのオレンジ
     secondary: '#2E7D5B', // 道後温泉の緑

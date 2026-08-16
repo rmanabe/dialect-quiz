@@ -21,7 +21,7 @@ const ishikawa = {
   appNameEn: 'Ishikawa-ben Quiz',
   bundleId: 'com.robonetc.dialectquiz.ishikawa',
   scheme: 'dialectquizishikawa',
-  easProjectId: '',
+  easProjectId: 'd7fc6f40-3fb9-403a-867e-3425fa167035',
   theme: {
     primary: '#B8860B', // kanazawa gold leaf
     secondary: '#8B0000', // kaga-yuzen red

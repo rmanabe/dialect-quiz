@@ -21,7 +21,7 @@ const aichi = {
   appNameEn: 'Aichi-ben Quiz',
   bundleId: 'com.robonetc.dialectquiz.aichi',
   scheme: 'dialectquizaichi',
-  easProjectId: '',
+  easProjectId: '91ac6f88-d261-4045-8cb3-32fd8c5f9b84',
   theme: {
     primary: '#B8342E', // hatcho-miso red
     secondary: '#E3B23C', // kinshachi (golden shachihoko) gold
