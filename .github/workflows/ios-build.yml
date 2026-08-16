@@ -1,0 +1,43 @@
+name: iOS local build (no EAS credits)
+
+# Builds an iOS Simulator artifact by running `eas build --local` on a
+# GitHub-hosted macOS runner instead of EAS's cloud queue, so it never
+# consumes the EAS free-tier build credit pool. Requires the "preview"
+# build profile in eas.json to target the simulator (no code signing).
+
+on:
+  workflow_dispatch:
+    inputs:
+      prefecture:
+        description: "EXPO_PUBLIC_PREFECTURE value (e.g. tokyo, osaka, hokkaido)"
+        required: true
+        default: "osaka"
+
+jobs:
+  build-ios-simulator:
+    runs-on: macos-latest
+    env:
+      EXPO_PUBLIC_PREFECTURE: ${{ github.event.inputs.prefecture }}
+      EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install eas-cli
+        run: npm install -g eas-cli
+
+      - name: Build iOS (simulator, local, no EAS credits)
+        run: eas build --local --platform ios --profile preview --non-interactive --output=./build-ios.tar.gz
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-simulator-build-${{ github.event.inputs.prefecture }}
+          path: build-ios.tar.gz
+          retention-days: 14
