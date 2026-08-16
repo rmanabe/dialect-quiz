@@ -1,0 +1,35 @@
+{
+  "home": {
+    "subtitle": "この言葉、なんて意味かわかる?",
+    "start": "クイズをはじめる",
+    "bestTitle": "これまでの最高称号",
+    "noBestTitleYet": "まだ挑戦記録がありません",
+    "removeAds": "広告を非表示にする(買い切り)",
+    "adsRemoved": "広告非表示 適用中",
+    "restorePurchases": "購入を復元",
+    "language": "言語"
+  },
+  "quiz": {
+    "progress": "{{current}} / {{total}} 問",
+    "question": "この{{dialect}}の意味は?",
+    "correct": "せいかい!",
+    "incorrect": "ざんねん…",
+    "correctAnswerWas": "正解: {{answer}}",
+    "next": "つぎへ"
+  },
+  "result": {
+    "title": "結果発表",
+    "score": "{{score}} / {{total}} 問正解",
+    "perfectHeading": "全問正解!おめでとう!",
+    "yourTitle": "あなたの称号",
+    "retry": "もういちど挑戦する",
+    "home": "ホームにもどる"
+  },
+  "purchase": {
+    "processing": "処理中...",
+    "error": "購入処理でエラーが発生しました",
+    "restoreSuccess": "購入情報を復元しました",
+    "restoreNone": "復元できる購入がありませんでした",
+    "webUnavailable": "ブラウザ版では購入できません。スマホアプリをご利用ください。"
+  }
+}
