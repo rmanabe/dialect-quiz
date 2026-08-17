@@ -21,7 +21,7 @@ const miyazaki = {
   appNameEn: 'Miyazaki-ben Quiz',
   bundleId: 'com.robonetc.dialectquiz.miyazaki',
   scheme: 'dialectquizmiyazaki',
-  easProjectId: '',
+  easProjectId: '1b7a67f1-efc3-48c2-840a-b7fa08772f2b',
   theme: {
     primary: '#E8823C', // hyuga-natsu citrus orange
     secondary: '#3E8E7E', // aoshima subtropical teal
