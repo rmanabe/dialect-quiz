@@ -21,7 +21,7 @@ const kumamoto = {
   appNameEn: 'Kumamoto-ben Quiz',
   bundleId: 'com.robonetc.dialectquiz.kumamoto',
   scheme: 'dialectquizkumamoto',
-  easProjectId: '',
+  easProjectId: '6900533d-3663-48e3-8b65-24d50a461b43',
   theme: {
     primary: '#2E7D46', // kumamon-inspired forest green
     secondary: '#C9302C', // aso volcanic red
