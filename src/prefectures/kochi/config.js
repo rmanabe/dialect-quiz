@@ -21,7 +21,7 @@ const kochi = {
   appNameEn: 'Kochi-ben Quiz',
   bundleId: 'com.robonetc.dialectquiz.kochi',
   scheme: 'dialectquizkochi',
-  easProjectId: '',
+  easProjectId: 'a583a3d8-b557-4610-b763-de8d8cbe6d69',
   theme: {
     primary: '#D9483D', // カツオのたたきの赤
     secondary: '#1B6CA8', // 黒潮の青
