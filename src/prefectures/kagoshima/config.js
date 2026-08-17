@@ -21,7 +21,7 @@ const kagoshima = {
   appNameEn: 'Kagoshima-ben Quiz',
   bundleId: 'com.robonetc.dialectquiz.kagoshima',
   scheme: 'dialectquizkagoshima',
-  easProjectId: '',
+  easProjectId: '7b2929ca-e407-4621-a3f1-7a9ffb21e624',
   theme: {
     primary: '#B5482A', // sakurajima volcanic ash red-brown
     secondary: '#E8A23D', // satsuma-imo sweet potato gold
