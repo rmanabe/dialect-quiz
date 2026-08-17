@@ -21,7 +21,7 @@ const mie = {
   appNameEn: 'Mie-ben Quiz',
   bundleId: 'com.robonetc.dialectquiz.mie',
   scheme: 'dialectquizmie',
-  easProjectId: '',
+  easProjectId: 'd819ebd1-fc43-4b09-ac8c-4bb03787aa19',
   theme: {
     primary: '#2E7D6B', // Ise-Shima ocean green
     secondary: '#C9A227', // Ise-jingu gold
