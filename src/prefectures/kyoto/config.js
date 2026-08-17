@@ -21,7 +21,7 @@ const kyoto = {
   appNameEn: 'Kyoto-ben Quiz',
   bundleId: 'com.robonetc.dialectquiz.kyoto',
   scheme: 'dialectquizkyoto',
-  easProjectId: '',
+  easProjectId: 'bb22370e-151f-46d9-9b7d-a144f1684d2b',
   theme: {
     primary: '#B7282E', // Kiyomizu-dera vermillion torii red
     secondary: '#D4A017', // Kinkaku-ji gold leaf
