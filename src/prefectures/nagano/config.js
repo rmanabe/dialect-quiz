@@ -21,7 +21,7 @@ const nagano = {
   appNameEn: 'Nagano-ben Quiz',
   bundleId: 'com.robonetc.dialectquiz.nagano',
   scheme: 'dialectquiznagano',
-  easProjectId: '',
+  easProjectId: 'e33e3f51-e6f2-4f32-9ff3-4970e2d54bc2',
   theme: {
     primary: '#2E6B3E', // shinshu forest green
     secondary: '#8FAADC', // northern alps sky blue
