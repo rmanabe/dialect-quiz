@@ -21,7 +21,7 @@ const oita = {
   appNameEn: 'Oita-ben Quiz',
   bundleId: 'com.robonetc.dialectquiz.oita',
   scheme: 'dialectquizoita',
-  easProjectId: '',
+  easProjectId: 'abffc0ee-9389-4c71-bfd3-4fa33976df35',
   theme: {
     primary: '#3C7A5C', // beppu onsen steam green
     secondary: '#E0A63E', // kabosu citrus gold
