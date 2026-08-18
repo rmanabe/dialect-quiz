@@ -21,7 +21,7 @@ const nagasaki = {
   appNameEn: 'Nagasaki-ben Quiz',
   bundleId: 'com.robonetc.dialectquiz.nagasaki',
   scheme: 'dialectquiznagasaki',
-  easProjectId: '',
+  easProjectId: '80a512fc-deb7-4068-81ac-d50c874ac5e8',
   theme: {
     primary: '#1F5C8B', // nagasaki harbor blue
     secondary: '#E8A33D', // castella sponge gold
