@@ -21,7 +21,7 @@ const nara = {
   appNameEn: 'Nara-ben Quiz',
   bundleId: 'com.robonetc.dialectquiz.nara',
   scheme: 'dialectquiznara',
-  easProjectId: '',
+  easProjectId: '4dbb775b-885c-4a24-9c26-4cf84a1ce5cd',
   theme: {
     primary: '#8B5A2B', // Nara deer coat brown
     secondary: '#C9A66B', // Nara ink / persimmon
