@@ -21,7 +21,7 @@ const niigata = {
   appNameEn: 'Niigata-ben Quiz',
   bundleId: 'com.robonetc.dialectquiz.niigata',
   scheme: 'dialectquizniigata',
-  easProjectId: '',
+  easProjectId: 'd5c9c6f8-2a06-493e-8e2b-0dbd2df251a9',
   theme: {
     primary: '#4A6FA5', // shinano river blue
     secondary: '#F2C94C', // koshihikari rice gold
