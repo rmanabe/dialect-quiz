@@ -21,7 +21,7 @@ const okayama = {
   appNameEn: 'Okayama-ben Quiz',
   bundleId: 'com.robonetc.dialectquiz.okayama',
   scheme: 'dialectquizokayama',
-  easProjectId: '',
+  easProjectId: '3390c578-225d-42c4-bf8e-7bc1b5fd260b',
   theme: {
     primary: '#F28FA2', // 白桃のピンク
     secondary: '#3F51B5', // 鬼退治の青
