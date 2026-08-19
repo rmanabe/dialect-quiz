@@ -1,13 +1,25 @@
 import { useSyncExternalStore } from 'react';
 import { Platform } from 'react-native';
-import Purchases, { type CustomerInfo } from 'react-native-purchases';
+import Purchases, { type CustomerInfo, type PurchasesStoreProduct } from 'react-native-purchases';
 import { getPrefectureConfig } from '../prefectures';
 
-type PurchaseResult = { success: boolean; error?: 'cancelled' | 'no_offering' | 'not_configured' | string };
-type RestoreResult = { success: boolean; restored: boolean };
+// Every failure mode is surfaced to the caller as a distinct code so the UI can
+// explain what happened. A silently-dead purchase button is an App Review
+// rejection under Guideline 2.1(b) — that is exactly what happened to the
+// 1.0 (build 3) submission, which shipped before the RevenueCat API keys were
+// added to EAS and therefore never configured the SDK at all.
+export type PurchaseErrorCode =
+  | 'cancelled'
+  | 'not_configured'
+  | 'no_offering'
+  | 'unknown';
+
+type PurchaseResult = { success: boolean; error?: PurchaseErrorCode; detail?: string };
+type RestoreResult = { success: boolean; restored: boolean; detail?: string };
 
 let currentIsAdFree = false;
 let configured = false;
+let initFailure: string | null = null;
 const listeners = new Set<() => void>();
 
 function notify() {
@@ -24,11 +36,22 @@ export async function initPurchases(): Promise<void> {
   const pref = getPrefectureConfig();
   const apiKey = Platform.OS === 'ios' ? pref.revenueCat.apiKeyIos : pref.revenueCat.apiKeyAndroid;
   if (!apiKey) {
+    initFailure = 'missing_api_key';
     console.warn('[purchases] No RevenueCat API key configured for this build; remove-ads purchase is disabled.');
+    notify();
     return;
   }
-  Purchases.configure({ apiKey });
-  configured = true;
+  try {
+    Purchases.configure({ apiKey });
+    configured = true;
+    initFailure = null;
+  } catch (e: any) {
+    initFailure = e?.message ?? 'configure_failed';
+    console.warn('[purchases] Purchases.configure failed', e);
+    notify();
+    return;
+  }
+  notify();
   Purchases.addCustomerInfoUpdateListener(updateFromCustomerInfo);
   try {
     const info = await Purchases.getCustomerInfo();
@@ -38,33 +61,61 @@ export async function initPurchases(): Promise<void> {
   }
 }
 
+/**
+ * True once the SDK is configured. The UI hides the buy button when this is
+ * false so the user is never offered a control that cannot work.
+ */
+export function isPurchaseAvailable(): boolean {
+  return configured;
+}
+
+export function getInitFailure(): string | null {
+  return initFailure;
+}
+
 export async function purchaseRemoveAds(): Promise<PurchaseResult> {
-  if (!configured) return { success: false, error: 'not_configured' };
+  if (!configured) {
+    return { success: false, error: 'not_configured', detail: initFailure ?? undefined };
+  }
   const pref = getPrefectureConfig();
   try {
+    // Preferred path: the configured Offering. Fall back to fetching the
+    // product straight from the store, so a missing/misconfigured Offering
+    // cannot leave the user with a dead button.
     const offerings = await Purchases.getOfferings();
     const pkg =
       offerings.current?.availablePackages.find((p) => p.product.identifier === pref.revenueCat.productId) ??
       offerings.current?.availablePackages[0];
-    if (!pkg) return { success: false, error: 'no_offering' };
 
-    const { customerInfo } = await Purchases.purchasePackage(pkg);
+    if (pkg) {
+      const { customerInfo } = await Purchases.purchasePackage(pkg);
+      updateFromCustomerInfo(customerInfo);
+      return { success: true };
+    }
+
+    const products: PurchasesStoreProduct[] = await Purchases.getProducts([pref.revenueCat.productId]);
+    const product = products.find((p) => p.identifier === pref.revenueCat.productId) ?? products[0];
+    if (!product) return { success: false, error: 'no_offering' };
+
+    const { customerInfo } = await Purchases.purchaseStoreProduct(product);
     updateFromCustomerInfo(customerInfo);
     return { success: true };
   } catch (e: any) {
     if (e?.userCancelled) return { success: false, error: 'cancelled' };
-    return { success: false, error: e?.message ?? 'unknown' };
+    return { success: false, error: 'unknown', detail: e?.message ?? String(e) };
   }
 }
 
 export async function restorePurchases(): Promise<RestoreResult> {
-  if (!configured) return { success: false, restored: false };
+  if (!configured) {
+    return { success: false, restored: false, detail: initFailure ?? 'not_configured' };
+  }
   try {
     const info = await Purchases.restorePurchases();
     updateFromCustomerInfo(info);
     return { success: true, restored: currentIsAdFree };
-  } catch {
-    return { success: false, restored: false };
+  } catch (e: any) {
+    return { success: false, restored: false, detail: e?.message ?? String(e) };
   }
 }
 
@@ -79,4 +130,13 @@ function getSnapshot(): boolean {
 
 export function useAdFree(): boolean {
   return useSyncExternalStore(subscribe, getSnapshot, () => false);
+}
+
+function getAvailableSnapshot(): boolean {
+  return configured;
+}
+
+/** Re-renders the caller when the SDK finishes configuring (or fails to). */
+export function usePurchaseAvailable(): boolean {
+  return useSyncExternalStore(subscribe, getAvailableSnapshot, () => false);
 }

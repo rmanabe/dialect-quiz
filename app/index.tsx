@@ -1,11 +1,16 @@
 import { useCallback, useEffect, useState } from 'react';
-import { View, Text, Pressable, StyleSheet, ScrollView, Platform } from 'react-native';
+import { View, Text, Pressable, StyleSheet, ScrollView, Platform, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { getPrefectureConfig } from '../src/prefectures';
 import { startNewQuiz } from '../src/state/startQuiz';
 import { getBestResult, type BestResult } from '../src/state/bestResult';
-import { useAdFree, purchaseRemoveAds, restorePurchases } from '../src/purchases';
+import {
+  useAdFree,
+  usePurchaseAvailable,
+  purchaseRemoveAds,
+  restorePurchases,
+} from '../src/purchases';
 import AdBanner from '../src/ads/AdBanner';
 import { TakoyakiMascot, OsakaCastle, WordMascot } from '../src/components/illustrations';
 import { mascots } from '../src/components/illustrations/mascots';
@@ -17,6 +22,7 @@ export default function Home() {
   const { t } = useTranslation();
   const router = useRouter();
   const adFree = useAdFree();
+  const purchaseAvailable = usePurchaseAvailable();
   const [best, setBest] = useState<BestResult | null>(null);
   const [purchasing, setPurchasing] = useState(false);
 
@@ -29,17 +35,39 @@ export default function Home() {
     router.push('/quiz');
   }, [router]);
 
+  // Always tell the user what happened. Swallowing the result made the button
+  // look dead whenever the purchase could not start, which is what App Review
+  // rejected under Guideline 2.1(b).
   const handleRemoveAds = useCallback(async () => {
     setPurchasing(true);
-    await purchaseRemoveAds();
+    const res = await purchaseRemoveAds();
     setPurchasing(false);
-  }, []);
+    if (res.success) {
+      Alert.alert(t('purchase.successTitle'), t('purchase.successBody'));
+      return;
+    }
+    if (res.error === 'cancelled') return; // user backed out on purpose
+    Alert.alert(
+      t('purchase.errorTitle'),
+      res.error === 'not_configured' || res.error === 'no_offering'
+        ? t('purchase.unavailable')
+        : t('purchase.error'),
+    );
+  }, [t]);
 
   const handleRestore = useCallback(async () => {
     setPurchasing(true);
-    await restorePurchases();
+    const res = await restorePurchases();
     setPurchasing(false);
-  }, []);
+    if (!res.success) {
+      Alert.alert(t('purchase.errorTitle'), t('purchase.unavailable'));
+      return;
+    }
+    Alert.alert(
+      t('purchase.restoreTitle'),
+      res.restored ? t('purchase.restoreSuccess') : t('purchase.restoreNone'),
+    );
+  }, [t]);
 
   return (
     <ScrollView
@@ -75,7 +103,9 @@ export default function Home() {
         )}
       </View>
 
-      {Platform.OS !== 'web' && !adFree && (
+      {/* Only offer purchase controls once the store SDK is actually usable —
+          never show a control that cannot do anything. */}
+      {Platform.OS !== 'web' && purchaseAvailable && !adFree && (
         <Pressable style={styles.secondaryButton} onPress={handleRemoveAds} disabled={purchasing}>
           <Text style={styles.secondaryButtonText}>
             {purchasing ? t('purchase.processing') : t('home.removeAds')}
@@ -83,7 +113,7 @@ export default function Home() {
         </Pressable>
       )}
       {adFree && <Text style={styles.adFreeLabel}>{t('home.adsRemoved')}</Text>}
-      {Platform.OS !== 'web' && (
+      {Platform.OS !== 'web' && purchaseAvailable && !adFree && (
         <Pressable onPress={handleRestore} disabled={purchasing} hitSlop={8}>
           <Text style={styles.restoreLink}>{t('home.restorePurchases')}</Text>
         </Pressable>
