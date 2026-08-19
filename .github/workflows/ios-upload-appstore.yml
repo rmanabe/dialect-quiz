@@ -96,39 +96,40 @@ jobs:
             exit 1
           fi
           mkdir -p ~/private_keys
-          KEY_PATH=~/private_keys/AuthKey_${ASC_KEY_ID}.p8
+          KEY_PATH="$HOME/private_keys/AuthKey_${ASC_KEY_ID}.p8"
 
-          # 1. literal backslash-n -> real newline
-          printf '%s' "$ASC_PRIVATE_KEY" | sed 's/\\n/\n/g' > "$KEY_PATH"
-
-          # 2. if it is still a single line, rebuild the PEM by wrapping the
-          #    base64 body at 64 chars between the BEGIN/END markers
-          if [ "$(wc -l < "$KEY_PATH")" -le 1 ]; then
-            echo "Key arrived as a single line; rebuilding PEM line breaks."
-            BODY=$(tr -d '\n\r ' < "$KEY_PATH" \
-              | sed -e 's/-----BEGINPRIVATEKEY-----//' -e 's/-----ENDPRIVATEKEY-----//')
-            {
-              echo "-----BEGIN PRIVATE KEY-----"
-              echo "$BODY" | fold -w 64
-              echo "-----END PRIVATE KEY-----"
-            } > "$KEY_PATH"
-          fi
-
-          # 3. guarantee a trailing newline
-          [ -n "$(tail -c 1 "$KEY_PATH")" ] && echo >> "$KEY_PATH"
+          # Rebuild the PEM from whatever shape the secret arrived in. Doing this
+          # in python avoids BSD-sed's refusal to emit \n in a replacement and
+          # handles BOM / CRLF / literal \n / one-long-line all at once.
+          # The key is handed over in the environment, not argv, so it never
+          # shows up in a process listing.
+          KEY_PATH="$KEY_PATH" python3 - <<'PY'
+          import os, re, sys, base64
+          raw = os.environ['ASC_PRIVATE_KEY']
+          raw = raw.lstrip('﻿').replace('\r\n', '\n').replace('\r', '\n')
+          raw = raw.replace('\\n', '\n')               # literal backslash-n
+          # Pull out the base64 body regardless of how the markers are spaced.
+          body = re.sub(r'-{2,}\s*BEGIN[^-]*-{2,}', '', raw)
+          body = re.sub(r'-{2,}\s*END[^-]*-{2,}', '', body)
+          body = ''.join(body.split())                 # drop all whitespace
+          try:
+              base64.b64decode(body, validate=True)
+          except Exception as e:
+              print(f'::error::ASC_PRIVATE_KEY body is not valid base64 ({e}). '
+                    'Copy the AuthKey_<KEYID>.p8 file contents verbatim.')
+              sys.exit(1)
+          pem = ('-----BEGIN PRIVATE KEY-----\n'
+                 + '\n'.join(body[i:i+64] for i in range(0, len(body), 64))
+                 + '\n-----END PRIVATE KEY-----\n')
+          open(os.environ['KEY_PATH'], 'w', newline='\n').write(pem)
+          print(f'rebuilt PEM: {len(body)} base64 chars, '
+                f'{pem.count(chr(10))} lines')
+          PY
           chmod 600 "$KEY_PATH"
 
-          echo "--- key shape (no secret content) ---"
-          echo "lines: $(wc -l < "$KEY_PATH")"
-          echo "first: $(head -n 1 "$KEY_PATH")"
-          echo "last:  $(tail -n 1 "$KEY_PATH")"
-          if ! head -n 1 "$KEY_PATH" | grep -q 'BEGIN PRIVATE KEY'; then
-            echo "::error::ASC_PRIVATE_KEY does not start with -----BEGIN PRIVATE KEY-----. Paste the whole .p8 file, including the BEGIN/END lines."
-            exit 1
-          fi
-          # Final proof the bytes really are a usable EC private key.
+          # Proof the bytes really are a usable key. Nothing secret is printed.
           if ! openssl pkey -in "$KEY_PATH" -noout 2>/dev/null; then
-            echo "::error::The staged .p8 is not a parseable private key. Re-copy the AuthKey_<KEYID>.p8 file contents verbatim."
+            echo "::error::The staged .p8 is not a parseable private key. Re-copy the AuthKey_<KEYID>.p8 contents (including the BEGIN/END lines) into the ASC_PRIVATE_KEY secret."
             exit 1
           fi
           echo "openssl: key parses OK"
