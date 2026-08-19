@@ -87,3 +87,18 @@ test('every bank has at least four distinct meanings so a quiz can be built', ()
 test('osaka is present — it is the released app', () => {
   assert.ok(prefectureIds.includes('osaka'));
 });
+
+test('every bank keeps one question per line', () => {
+  // Content edits are usually scripted, and a script that re-serialises with
+  // JSON.stringify(..., 2) explodes each row across four lines and rewrites the
+  // whole file — which buries a five-word change in an 800-line diff. Pinning
+  // the layout keeps future diffs readable.
+  for (const id of prefectureIds) {
+    const raw = fs.readFileSync(path.join(prefecturesDir, id, 'questions.json'), 'utf8');
+    const lines = raw.replace(/\r\n/g, '\n').trimEnd().split('\n');
+    const count = JSON.parse(raw).length;
+    assert.equal(lines.length, count + 2, `${id}: expected '[', ${count} rows, then ']'`);
+    assert.equal(lines[0], '[');
+    assert.equal(lines[lines.length - 1], ']');
+  }
+});

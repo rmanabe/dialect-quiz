@@ -1,722 +1,146 @@
 [
-  {
-    "id": 1,
-    "word": "あやかまっさんどした",
-    "meaning_ja": "お騒がせしました"
-  },
-  {
-    "id": 2,
-    "word": "いけず",
-    "meaning_ja": "意地悪"
-  },
-  {
-    "id": 3,
-    "word": "おいでやす",
-    "meaning_ja": "いらっしゃい"
-  },
-  {
-    "id": 4,
-    "word": "おこしやす",
-    "meaning_ja": "いらっしゃいませ"
-  },
-  {
-    "id": 5,
-    "word": "おおきに",
-    "meaning_ja": "ありがとう"
-  },
-  {
-    "id": 6,
-    "word": "おばんどす",
-    "meaning_ja": "こんばんは"
-  },
-  {
-    "id": 7,
-    "word": "かんにん",
-    "meaning_ja": "許して"
-  },
-  {
-    "id": 8,
-    "word": "かんにんえ",
-    "meaning_ja": "ごめんね、許してね"
-  },
-  {
-    "id": 9,
-    "word": "きばる",
-    "meaning_ja": "がんばる"
-  },
-  {
-    "id": 10,
-    "word": "おきばりやす",
-    "meaning_ja": "がんばってください"
-  },
-  {
-    "id": 11,
-    "word": "ぎょーさん",
-    "meaning_ja": "たくさん"
-  },
-  {
-    "id": 12,
-    "word": "こーとな",
-    "meaning_ja": "地味で上品な"
-  },
-  {
-    "id": 13,
-    "word": "こないだうち",
-    "meaning_ja": "この間、先日"
-  },
-  {
-    "id": 14,
-    "word": "さかい",
-    "meaning_ja": "～だから"
-  },
-  {
-    "id": 15,
-    "word": "しんどい",
-    "meaning_ja": "疲れる、つらい"
-  },
-  {
-    "id": 16,
-    "word": "しんきくさい",
-    "meaning_ja": "もどかしい、じれったい"
-  },
-  {
-    "id": 17,
-    "word": "たく",
-    "meaning_ja": "煮る"
-  },
-  {
-    "id": 18,
-    "word": "てんご",
-    "meaning_ja": "わるふざけ、いたずら"
-  },
-  {
-    "id": 19,
-    "word": "なおす",
-    "meaning_ja": "しまう、片づける"
-  },
-  {
-    "id": 20,
-    "word": "なむなむ",
-    "meaning_ja": "まずまず、まあまあ"
-  },
-  {
-    "id": 21,
-    "word": "なんぎ",
-    "meaning_ja": "困る"
-  },
-  {
-    "id": 22,
-    "word": "のく",
-    "meaning_ja": "どく、よける"
-  },
-  {
-    "id": 23,
-    "word": "はんなり",
-    "meaning_ja": "明るくて上品な様子"
-  },
-  {
-    "id": 24,
-    "word": "べべたこ",
-    "meaning_ja": "びり、最下位"
-  },
-  {
-    "id": 25,
-    "word": "ほかす",
-    "meaning_ja": "捨てる"
-  },
-  {
-    "id": 26,
-    "word": "まったり",
-    "meaning_ja": "やわらかくおだやかな味わい"
-  },
-  {
-    "id": 27,
-    "word": "もみない",
-    "meaning_ja": "味がない、美味しくない"
-  },
-  {
-    "id": 28,
-    "word": "あじない",
-    "meaning_ja": "おいしくない"
-  },
-  {
-    "id": 29,
-    "word": "やにこい",
-    "meaning_ja": "壊れやすい、ひ弱"
-  },
-  {
-    "id": 30,
-    "word": "ややこしい",
-    "meaning_ja": "難しい、複雑な"
-  },
-  {
-    "id": 31,
-    "word": "よろしおあがりやす",
-    "meaning_ja": "どうぞ召し上がってください"
-  },
-  {
-    "id": 32,
-    "word": "わや",
-    "meaning_ja": "台無し、無茶なこと"
-  },
-  {
-    "id": 33,
-    "word": "わらける",
-    "meaning_ja": "つい笑ってしまう"
-  },
-  {
-    "id": 34,
-    "word": "かいらしい",
-    "meaning_ja": "かわいらしい"
-  },
-  {
-    "id": 35,
-    "word": "おぶう",
-    "meaning_ja": "お茶"
-  },
-  {
-    "id": 36,
-    "word": "ごっそーさん",
-    "meaning_ja": "ごちそうさま"
-  },
-  {
-    "id": 37,
-    "word": "かなん",
-    "meaning_ja": "困った"
-  },
-  {
-    "id": 38,
-    "word": "きさんじ",
-    "meaning_ja": "気楽なこと"
-  },
-  {
-    "id": 39,
-    "word": "あかんえ",
-    "meaning_ja": "いけないわ"
-  },
-  {
-    "id": 40,
-    "word": "あったこい",
-    "meaning_ja": "暖かい"
-  },
-  {
-    "id": 41,
-    "word": "あないして",
-    "meaning_ja": "あのように"
-  },
-  {
-    "id": 42,
-    "word": "あまえた",
-    "meaning_ja": "甘えん坊"
-  },
-  {
-    "id": 43,
-    "word": "あんじょー",
-    "meaning_ja": "うまく、上手に"
-  },
-  {
-    "id": 44,
-    "word": "いにしな",
-    "meaning_ja": "帰りがけ"
-  },
-  {
-    "id": 45,
-    "word": "いらち",
-    "meaning_ja": "せっかちな人"
-  },
-  {
-    "id": 46,
-    "word": "うち",
-    "meaning_ja": "私（女性の一人称）"
-  },
-  {
-    "id": 47,
-    "word": "えげつない",
-    "meaning_ja": "ひどい"
-  },
-  {
-    "id": 48,
-    "word": "おいど",
-    "meaning_ja": "おしり"
-  },
-  {
-    "id": 49,
-    "word": "おいない",
-    "meaning_ja": "いらっしゃいよ"
-  },
-  {
-    "id": 50,
-    "word": "おたのもうします",
-    "meaning_ja": "お願いします"
-  },
-  {
-    "id": 51,
-    "word": "おはようさんどす",
-    "meaning_ja": "おはようございます"
-  },
-  {
-    "id": 52,
-    "word": "おばんざい",
-    "meaning_ja": "京都の家庭の日々のおかず"
-  },
-  {
-    "id": 53,
-    "word": "べんちゃら",
-    "meaning_ja": "お世辞"
-  },
-  {
-    "id": 54,
-    "word": "おやかまっさん",
-    "meaning_ja": "お邪魔しました"
-  },
-  {
-    "id": 55,
-    "word": "きずい",
-    "meaning_ja": "わがまま"
-  },
-  {
-    "id": 56,
-    "word": "きゃーりい",
-    "meaning_ja": "気持ち悪い"
-  },
-  {
-    "id": 57,
-    "word": "ごめんやす",
-    "meaning_ja": "ごめんください"
-  },
-  {
-    "id": 58,
-    "word": "じぶんどき",
-    "meaning_ja": "食事時"
-  },
-  {
-    "id": 59,
-    "word": "しもた",
-    "meaning_ja": "しまった"
-  },
-  {
-    "id": 60,
-    "word": "すこい",
-    "meaning_ja": "ずるい"
-  },
-  {
-    "id": 61,
-    "word": "だいじおへん",
-    "meaning_ja": "差し支えない"
-  },
-  {
-    "id": 62,
-    "word": "たいそな",
-    "meaning_ja": "大げさな"
-  },
-  {
-    "id": 63,
-    "word": "だわすけ",
-    "meaning_ja": "怠け者"
-  },
-  {
-    "id": 64,
-    "word": "たんと",
-    "meaning_ja": "たくさん"
-  },
-  {
-    "id": 65,
-    "word": "つべたい",
-    "meaning_ja": "冷たい"
-  },
-  {
-    "id": 66,
-    "word": "でぼちん",
-    "meaning_ja": "おでこ"
-  },
-  {
-    "id": 67,
-    "word": "どんつき",
-    "meaning_ja": "突き当り"
-  },
-  {
-    "id": 68,
-    "word": "なんしか",
-    "meaning_ja": "とにかく"
-  },
-  {
-    "id": 69,
-    "word": "ぬくい",
-    "meaning_ja": "温かい"
-  },
-  {
-    "id": 70,
-    "word": "はばかりさん",
-    "meaning_ja": "お疲れさまでした"
-  },
-  {
-    "id": 71,
-    "word": "ぺちゃこい",
-    "meaning_ja": "平たい"
-  },
-  {
-    "id": 72,
-    "word": "ぼちぼち",
-    "meaning_ja": "まあまあ"
-  },
-  {
-    "id": 73,
-    "word": "ほな",
-    "meaning_ja": "それじゃあ"
-  },
-  {
-    "id": 74,
-    "word": "ほっこり",
-    "meaning_ja": "くつろいだ様子、疲れた"
-  },
-  {
-    "id": 75,
-    "word": "ややこ",
-    "meaning_ja": "赤ん坊"
-  },
-  {
-    "id": 76,
-    "word": "よばれる",
-    "meaning_ja": "ごちそうになる"
-  },
-  {
-    "id": 77,
-    "word": "おへん",
-    "meaning_ja": "ありません"
-  },
-  {
-    "id": 78,
-    "word": "どすえ",
-    "meaning_ja": "ですよ"
-  },
-  {
-    "id": 79,
-    "word": "きょうび",
-    "meaning_ja": "近頃、今どき"
-  },
-  {
-    "id": 80,
-    "word": "なんでやのん",
-    "meaning_ja": "どうしてなの"
-  },
-  {
-    "id": 81,
-    "word": "どないしたん",
-    "meaning_ja": "どうしたの"
-  },
-  {
-    "id": 82,
-    "word": "しはる",
-    "meaning_ja": "なさる（尊敬の言い方）"
-  },
-  {
-    "id": 83,
-    "word": "かましまへん",
-    "meaning_ja": "構いません"
-  },
-  {
-    "id": 84,
-    "word": "きょうとい",
-    "meaning_ja": "恐ろしい、大変だ"
-  },
-  {
-    "id": 85,
-    "word": "ねぶる",
-    "meaning_ja": "なめる"
-  },
-  {
-    "id": 86,
-    "word": "いちびる",
-    "meaning_ja": "調子に乗ってふざける"
-  },
-  {
-    "id": 87,
-    "word": "こそばい",
-    "meaning_ja": "くすぐったい"
-  },
-  {
-    "id": 88,
-    "word": "さぶいぼ",
-    "meaning_ja": "鳥肌"
-  },
-  {
-    "id": 89,
-    "word": "なんぼでも",
-    "meaning_ja": "いくらでも"
-  },
-  {
-    "id": 90,
-    "word": "おもろい",
-    "meaning_ja": "おもしろい"
-  },
-  {
-    "id": 91,
-    "word": "うら",
-    "meaning_ja": "私"
-  },
-  {
-    "id": 92,
-    "word": "おえ",
-    "meaning_ja": "座敷"
-  },
-  {
-    "id": 93,
-    "word": "くど",
-    "meaning_ja": "かまど"
-  },
-  {
-    "id": 94,
-    "word": "げ",
-    "meaning_ja": "～の家"
-  },
-  {
-    "id": 95,
-    "word": "こっぺ",
-    "meaning_ja": "ズワイガニの雌"
-  },
-  {
-    "id": 96,
-    "word": "すくも",
-    "meaning_ja": "もみ殻"
-  },
-  {
-    "id": 97,
-    "word": "たぼこ",
-    "meaning_ja": "休憩"
-  },
-  {
-    "id": 98,
-    "word": "でぁあこ",
-    "meaning_ja": "大根"
-  },
-  {
-    "id": 99,
-    "word": "てっつき",
-    "meaning_ja": "竹編みの笊"
-  },
-  {
-    "id": 100,
-    "word": "どもならず",
-    "meaning_ja": "手に負えない子供"
-  },
-  {
-    "id": 101,
-    "word": "はたがめ",
-    "meaning_ja": "雷"
-  },
-  {
-    "id": 102,
-    "word": "ばんげ",
-    "meaning_ja": "夕暮れ、晩"
-  },
-  {
-    "id": 103,
-    "word": "ぶげんしゃ",
-    "meaning_ja": "金持ち"
-  },
-  {
-    "id": 104,
-    "word": "よんべ",
-    "meaning_ja": "昨夜"
-  },
-  {
-    "id": 105,
-    "word": "あからむ",
-    "meaning_ja": "熟す"
-  },
-  {
-    "id": 106,
-    "word": "かたる",
-    "meaning_ja": "仲間に入れる、相手にする"
-  },
-  {
-    "id": 107,
-    "word": "かれる",
-    "meaning_ja": "借りる"
-  },
-  {
-    "id": 108,
-    "word": "きやす",
-    "meaning_ja": "消す"
-  },
-  {
-    "id": 109,
-    "word": "こける",
-    "meaning_ja": "転ぶ"
-  },
-  {
-    "id": 110,
-    "word": "こばる",
-    "meaning_ja": "我慢する"
-  },
-  {
-    "id": 111,
-    "word": "ぼう",
-    "meaning_ja": "追いかける"
-  },
-  {
-    "id": 112,
-    "word": "ほくる",
-    "meaning_ja": "投げる"
-  },
-  {
-    "id": 113,
-    "word": "いかめい",
-    "meaning_ja": "うらやましい"
-  },
-  {
-    "id": 114,
-    "word": "えらい",
-    "meaning_ja": "疲れた"
-  },
-  {
-    "id": 115,
-    "word": "ちいと",
-    "meaning_ja": "ちょっと"
-  },
-  {
-    "id": 116,
-    "word": "みんごと",
-    "meaning_ja": "ようやく"
-  },
-  {
-    "id": 117,
-    "word": "ぼる",
-    "meaning_ja": "果実を木からもぐ"
-  },
-  {
-    "id": 118,
-    "word": "みぞこ",
-    "meaning_ja": "溝"
-  },
-  {
-    "id": 119,
-    "word": "あんばい",
-    "meaning_ja": "具合、加減"
-  },
-  {
-    "id": 120,
-    "word": "いける",
-    "meaning_ja": "土に埋める"
-  },
-  {
-    "id": 121,
-    "word": "おこた",
-    "meaning_ja": "こたつ"
-  },
-  {
-    "id": 122,
-    "word": "おちょくる",
-    "meaning_ja": "からかう"
-  },
-  {
-    "id": 123,
-    "word": "かしわ",
-    "meaning_ja": "鶏肉"
-  },
-  {
-    "id": 124,
-    "word": "くたびれる",
-    "meaning_ja": "疲れる"
-  },
-  {
-    "id": 125,
-    "word": "けったい",
-    "meaning_ja": "変な、奇妙な"
-  },
-  {
-    "id": 126,
-    "word": "ごんた",
-    "meaning_ja": "わんぱくな子"
-  },
-  {
-    "id": 127,
-    "word": "さぶい",
-    "meaning_ja": "寒い"
-  },
-  {
-    "id": 128,
-    "word": "しゃあない",
-    "meaning_ja": "仕方がない"
-  },
-  {
-    "id": 129,
-    "word": "じゃまくさい",
-    "meaning_ja": "面倒くさい"
-  },
-  {
-    "id": 130,
-    "word": "せんど",
-    "meaning_ja": "何度も"
-  },
-  {
-    "id": 131,
-    "word": "たいぎ",
-    "meaning_ja": "面倒くさい"
-  },
-  {
-    "id": 132,
-    "word": "ちゃう",
-    "meaning_ja": "違う"
-  },
-  {
-    "id": 133,
-    "word": "つれ",
-    "meaning_ja": "仲間、連れ"
-  },
-  {
-    "id": 134,
-    "word": "でんぼ",
-    "meaning_ja": "おでき"
-  },
-  {
-    "id": 135,
-    "word": "なんぼ",
-    "meaning_ja": "いくら"
-  },
-  {
-    "id": 136,
-    "word": "にぬき",
-    "meaning_ja": "ゆで卵"
-  },
-  {
-    "id": 137,
-    "word": "ねき",
-    "meaning_ja": "そば、近く"
-  },
-  {
-    "id": 138,
-    "word": "ひやこい",
-    "meaning_ja": "冷たい"
-  },
-  {
-    "id": 139,
-    "word": "まめ",
-    "meaning_ja": "元気なこと"
-  },
-  {
-    "id": 140,
-    "word": "みずや",
-    "meaning_ja": "食器棚"
-  },
-  {
-    "id": 141,
-    "word": "めばちこ",
-    "meaning_ja": "ものもらい"
-  },
-  {
-    "id": 142,
-    "word": "もっさい",
-    "meaning_ja": "やぼったい"
-  },
-  {
-    "id": 143,
-    "word": "やつす",
-    "meaning_ja": "おしゃれをする"
-  },
-  {
-    "id": 144,
-    "word": "ようけ",
-    "meaning_ja": "たくさん"
-  }
+  { "id": 1, "word": "あやかまっさんどした", "meaning_ja": "お騒がせしました" },
+  { "id": 2, "word": "いけず", "meaning_ja": "意地悪" },
+  { "id": 3, "word": "おいでやす", "meaning_ja": "いらっしゃい" },
+  { "id": 4, "word": "おこしやす", "meaning_ja": "いらっしゃいませ" },
+  { "id": 5, "word": "おおきに", "meaning_ja": "ありがとう" },
+  { "id": 6, "word": "おばんどす", "meaning_ja": "こんばんは" },
+  { "id": 7, "word": "かんにん", "meaning_ja": "許して" },
+  { "id": 8, "word": "かんにんえ", "meaning_ja": "ごめんね、許してね" },
+  { "id": 9, "word": "きばる", "meaning_ja": "がんばる" },
+  { "id": 10, "word": "おきばりやす", "meaning_ja": "がんばってください" },
+  { "id": 11, "word": "ぎょーさん", "meaning_ja": "たくさん" },
+  { "id": 12, "word": "こーとな", "meaning_ja": "地味で上品な" },
+  { "id": 13, "word": "こないだうち", "meaning_ja": "この間、先日" },
+  { "id": 14, "word": "さかい", "meaning_ja": "～だから" },
+  { "id": 15, "word": "しんどい", "meaning_ja": "疲れる、つらい" },
+  { "id": 16, "word": "しんきくさい", "meaning_ja": "もどかしい、じれったい" },
+  { "id": 17, "word": "たく", "meaning_ja": "煮る" },
+  { "id": 18, "word": "てんご", "meaning_ja": "わるふざけ、いたずら" },
+  { "id": 19, "word": "なおす", "meaning_ja": "しまう、片づける" },
+  { "id": 20, "word": "なむなむ", "meaning_ja": "まずまず、まあまあ" },
+  { "id": 21, "word": "なんぎ", "meaning_ja": "困る" },
+  { "id": 22, "word": "のく", "meaning_ja": "どく、よける" },
+  { "id": 23, "word": "はんなり", "meaning_ja": "明るくて上品な様子" },
+  { "id": 24, "word": "べべたこ", "meaning_ja": "びり、最下位" },
+  { "id": 25, "word": "ほかす", "meaning_ja": "捨てる" },
+  { "id": 26, "word": "まったり", "meaning_ja": "やわらかくおだやかな味わい" },
+  { "id": 27, "word": "もみない", "meaning_ja": "味がない、美味しくない" },
+  { "id": 28, "word": "あじない", "meaning_ja": "おいしくない" },
+  { "id": 29, "word": "やにこい", "meaning_ja": "壊れやすい、ひ弱" },
+  { "id": 30, "word": "ややこしい", "meaning_ja": "難しい、複雑な" },
+  { "id": 31, "word": "よろしおあがりやす", "meaning_ja": "どうぞ召し上がってください" },
+  { "id": 32, "word": "わや", "meaning_ja": "台無し、無茶なこと" },
+  { "id": 33, "word": "わらける", "meaning_ja": "つい笑ってしまう" },
+  { "id": 34, "word": "かいらしい", "meaning_ja": "かわいらしい" },
+  { "id": 35, "word": "おぶう", "meaning_ja": "お茶" },
+  { "id": 36, "word": "ごっそーさん", "meaning_ja": "ごちそうさま" },
+  { "id": 37, "word": "かなん", "meaning_ja": "困った" },
+  { "id": 38, "word": "きさんじ", "meaning_ja": "気楽なこと" },
+  { "id": 39, "word": "あかんえ", "meaning_ja": "いけないわ" },
+  { "id": 40, "word": "あったこい", "meaning_ja": "暖かい" },
+  { "id": 41, "word": "あないして", "meaning_ja": "あのように" },
+  { "id": 42, "word": "あまえた", "meaning_ja": "甘えん坊" },
+  { "id": 43, "word": "あんじょー", "meaning_ja": "うまく、上手に" },
+  { "id": 44, "word": "いにしな", "meaning_ja": "帰りがけ" },
+  { "id": 45, "word": "いらち", "meaning_ja": "せっかちな人" },
+  { "id": 46, "word": "うち", "meaning_ja": "私（女性の一人称）" },
+  { "id": 47, "word": "えげつない", "meaning_ja": "ひどい" },
+  { "id": 48, "word": "おいど", "meaning_ja": "おしり" },
+  { "id": 49, "word": "おいない", "meaning_ja": "いらっしゃいよ" },
+  { "id": 50, "word": "おたのもうします", "meaning_ja": "お願いします" },
+  { "id": 51, "word": "おはようさんどす", "meaning_ja": "おはようございます" },
+  { "id": 52, "word": "おばんざい", "meaning_ja": "京都の家庭の日々のおかず" },
+  { "id": 53, "word": "べんちゃら", "meaning_ja": "お世辞" },
+  { "id": 54, "word": "おやかまっさん", "meaning_ja": "お邪魔しました" },
+  { "id": 55, "word": "きずい", "meaning_ja": "わがまま" },
+  { "id": 56, "word": "きゃーりい", "meaning_ja": "気持ち悪い" },
+  { "id": 57, "word": "ごめんやす", "meaning_ja": "ごめんください" },
+  { "id": 58, "word": "じぶんどき", "meaning_ja": "食事時" },
+  { "id": 59, "word": "しもた", "meaning_ja": "しまった" },
+  { "id": 60, "word": "すこい", "meaning_ja": "ずるい" },
+  { "id": 61, "word": "だいじおへん", "meaning_ja": "差し支えない" },
+  { "id": 62, "word": "たいそな", "meaning_ja": "大げさな" },
+  { "id": 63, "word": "だわすけ", "meaning_ja": "怠け者" },
+  { "id": 64, "word": "たんと", "meaning_ja": "たくさん" },
+  { "id": 65, "word": "つべたい", "meaning_ja": "冷たい" },
+  { "id": 66, "word": "でぼちん", "meaning_ja": "おでこ" },
+  { "id": 67, "word": "どんつき", "meaning_ja": "突き当り" },
+  { "id": 68, "word": "なんしか", "meaning_ja": "とにかく" },
+  { "id": 69, "word": "ぬくい", "meaning_ja": "温かい" },
+  { "id": 70, "word": "はばかりさん", "meaning_ja": "お疲れさまでした" },
+  { "id": 71, "word": "ぺちゃこい", "meaning_ja": "平たい" },
+  { "id": 72, "word": "ぼちぼち", "meaning_ja": "まあまあ" },
+  { "id": 73, "word": "ほな", "meaning_ja": "それじゃあ" },
+  { "id": 74, "word": "ほっこり", "meaning_ja": "くつろいだ様子、疲れた" },
+  { "id": 75, "word": "ややこ", "meaning_ja": "赤ん坊" },
+  { "id": 76, "word": "よばれる", "meaning_ja": "ごちそうになる" },
+  { "id": 77, "word": "おへん", "meaning_ja": "ありません" },
+  { "id": 78, "word": "どすえ", "meaning_ja": "ですよ" },
+  { "id": 79, "word": "きょうび", "meaning_ja": "近頃、今どき" },
+  { "id": 80, "word": "なんでやのん", "meaning_ja": "どうしてなの" },
+  { "id": 81, "word": "どないしたん", "meaning_ja": "どうしたの" },
+  { "id": 82, "word": "しはる", "meaning_ja": "なさる（尊敬の言い方）" },
+  { "id": 83, "word": "かましまへん", "meaning_ja": "構いません" },
+  { "id": 84, "word": "きょうとい", "meaning_ja": "恐ろしい、大変だ" },
+  { "id": 85, "word": "ねぶる", "meaning_ja": "なめる" },
+  { "id": 86, "word": "いちびる", "meaning_ja": "調子に乗ってふざける" },
+  { "id": 87, "word": "こそばい", "meaning_ja": "くすぐったい" },
+  { "id": 88, "word": "さぶいぼ", "meaning_ja": "鳥肌" },
+  { "id": 89, "word": "なんぼでも", "meaning_ja": "いくらでも" },
+  { "id": 90, "word": "おもろい", "meaning_ja": "おもしろい" },
+  { "id": 91, "word": "うら", "meaning_ja": "私" },
+  { "id": 92, "word": "おえ", "meaning_ja": "座敷" },
+  { "id": 93, "word": "くど", "meaning_ja": "かまど" },
+  { "id": 94, "word": "げ", "meaning_ja": "～の家" },
+  { "id": 95, "word": "こっぺ", "meaning_ja": "ズワイガニの雌" },
+  { "id": 96, "word": "すくも", "meaning_ja": "もみ殻" },
+  { "id": 97, "word": "たぼこ", "meaning_ja": "休憩" },
+  { "id": 98, "word": "でぁあこ", "meaning_ja": "大根" },
+  { "id": 99, "word": "てっつき", "meaning_ja": "竹編みの笊" },
+  { "id": 100, "word": "どもならず", "meaning_ja": "手に負えない子供" },
+  { "id": 101, "word": "はたがめ", "meaning_ja": "雷" },
+  { "id": 102, "word": "ばんげ", "meaning_ja": "夕暮れ、晩" },
+  { "id": 103, "word": "ぶげんしゃ", "meaning_ja": "金持ち" },
+  { "id": 104, "word": "よんべ", "meaning_ja": "昨夜" },
+  { "id": 105, "word": "あからむ", "meaning_ja": "熟す" },
+  { "id": 106, "word": "かたる", "meaning_ja": "仲間に入れる、相手にする" },
+  { "id": 107, "word": "かれる", "meaning_ja": "借りる" },
+  { "id": 108, "word": "きやす", "meaning_ja": "消す" },
+  { "id": 109, "word": "こける", "meaning_ja": "転ぶ" },
+  { "id": 110, "word": "こばる", "meaning_ja": "我慢する" },
+  { "id": 111, "word": "ぼう", "meaning_ja": "追いかける" },
+  { "id": 112, "word": "ほくる", "meaning_ja": "投げる" },
+  { "id": 113, "word": "いかめい", "meaning_ja": "うらやましい" },
+  { "id": 114, "word": "えらい", "meaning_ja": "疲れた" },
+  { "id": 115, "word": "ちいと", "meaning_ja": "ちょっと" },
+  { "id": 116, "word": "みんごと", "meaning_ja": "ようやく" },
+  { "id": 117, "word": "ぼる", "meaning_ja": "果実を木からもぐ" },
+  { "id": 118, "word": "みぞこ", "meaning_ja": "溝" },
+  { "id": 119, "word": "あんばい", "meaning_ja": "具合、加減" },
+  { "id": 120, "word": "いける", "meaning_ja": "土に埋める" },
+  { "id": 121, "word": "おこた", "meaning_ja": "こたつ" },
+  { "id": 122, "word": "おちょくる", "meaning_ja": "からかう" },
+  { "id": 123, "word": "かしわ", "meaning_ja": "鶏肉" },
+  { "id": 124, "word": "くたびれる", "meaning_ja": "疲れる" },
+  { "id": 125, "word": "けったい", "meaning_ja": "変な、奇妙な" },
+  { "id": 126, "word": "ごんた", "meaning_ja": "わんぱくな子" },
+  { "id": 127, "word": "さぶい", "meaning_ja": "寒い" },
+  { "id": 128, "word": "しゃあない", "meaning_ja": "仕方がない" },
+  { "id": 129, "word": "じゃまくさい", "meaning_ja": "面倒くさい" },
+  { "id": 130, "word": "せんど", "meaning_ja": "何度も" },
+  { "id": 131, "word": "たいぎ", "meaning_ja": "面倒くさい" },
+  { "id": 132, "word": "ちゃう", "meaning_ja": "違う" },
+  { "id": 133, "word": "つれ", "meaning_ja": "仲間、連れ" },
+  { "id": 134, "word": "でんぼ", "meaning_ja": "おでき" },
+  { "id": 135, "word": "なんぼ", "meaning_ja": "いくら" },
+  { "id": 136, "word": "にぬき", "meaning_ja": "ゆで卵" },
+  { "id": 137, "word": "ねき", "meaning_ja": "そば、近く" },
+  { "id": 138, "word": "ひやこい", "meaning_ja": "冷たい" },
+  { "id": 139, "word": "まめ", "meaning_ja": "元気なこと" },
+  { "id": 140, "word": "みずや", "meaning_ja": "食器棚" },
+  { "id": 141, "word": "めばちこ", "meaning_ja": "ものもらい" },
+  { "id": 142, "word": "もっさい", "meaning_ja": "やぼったい" },
+  { "id": 143, "word": "やつす", "meaning_ja": "おしゃれをする" },
+  { "id": 144, "word": "ようけ", "meaning_ja": "たくさん" }
 ]
