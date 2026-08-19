@@ -81,6 +81,11 @@ jobs:
       # --- Upload to App Store Connect --------------------------------------
       # The API key must live at ~/private_keys/AuthKey_<KEYID>.p8 for altool
       # and notarytool to find it by key id.
+      # altool rejects the key ("does not contain a valid authentication key")
+      # unless the PEM is byte-exact: real newlines, and a trailing newline.
+      # A secret pasted from a terminal or JSON often arrives with literal "\n"
+      # or as one long line, so normalise both cases here. The diagnostics below
+      # only print the key's shape (line count, header/footer), never its body.
       - name: Stage App Store Connect API key
         env:
           ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
@@ -91,8 +96,42 @@ jobs:
             exit 1
           fi
           mkdir -p ~/private_keys
-          printf '%s' "$ASC_PRIVATE_KEY" > ~/private_keys/AuthKey_${ASC_KEY_ID}.p8
-          chmod 600 ~/private_keys/AuthKey_${ASC_KEY_ID}.p8
+          KEY_PATH=~/private_keys/AuthKey_${ASC_KEY_ID}.p8
+
+          # 1. literal backslash-n -> real newline
+          printf '%s' "$ASC_PRIVATE_KEY" | sed 's/\\n/\n/g' > "$KEY_PATH"
+
+          # 2. if it is still a single line, rebuild the PEM by wrapping the
+          #    base64 body at 64 chars between the BEGIN/END markers
+          if [ "$(wc -l < "$KEY_PATH")" -le 1 ]; then
+            echo "Key arrived as a single line; rebuilding PEM line breaks."
+            BODY=$(tr -d '\n\r ' < "$KEY_PATH" \
+              | sed -e 's/-----BEGINPRIVATEKEY-----//' -e 's/-----ENDPRIVATEKEY-----//')
+            {
+              echo "-----BEGIN PRIVATE KEY-----"
+              echo "$BODY" | fold -w 64
+              echo "-----END PRIVATE KEY-----"
+            } > "$KEY_PATH"
+          fi
+
+          # 3. guarantee a trailing newline
+          [ -n "$(tail -c 1 "$KEY_PATH")" ] && echo >> "$KEY_PATH"
+          chmod 600 "$KEY_PATH"
+
+          echo "--- key shape (no secret content) ---"
+          echo "lines: $(wc -l < "$KEY_PATH")"
+          echo "first: $(head -n 1 "$KEY_PATH")"
+          echo "last:  $(tail -n 1 "$KEY_PATH")"
+          if ! head -n 1 "$KEY_PATH" | grep -q 'BEGIN PRIVATE KEY'; then
+            echo "::error::ASC_PRIVATE_KEY does not start with -----BEGIN PRIVATE KEY-----. Paste the whole .p8 file, including the BEGIN/END lines."
+            exit 1
+          fi
+          # Final proof the bytes really are a usable EC private key.
+          if ! openssl pkey -in "$KEY_PATH" -noout 2>/dev/null; then
+            echo "::error::The staged .p8 is not a parseable private key. Re-copy the AuthKey_<KEYID>.p8 file contents verbatim."
+            exit 1
+          fi
+          echo "openssl: key parses OK"
 
       - name: Locate .ipa
         id: findipa
