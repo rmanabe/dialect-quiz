@@ -21,7 +21,7 @@ const okinawa = {
   appNameEn: 'Okinawa-ben Quiz',
   bundleId: 'com.robonetc.dialectquiz.okinawa',
   scheme: 'dialectquizokinawa',
-  easProjectId: '',
+  easProjectId: 'd9661fc6-87c0-497f-a882-5daa4bed283d',
   theme: {
     primary: '#1E9E9E', // churaumi coral sea teal
     secondary: '#F2A93C', // shisa gold
