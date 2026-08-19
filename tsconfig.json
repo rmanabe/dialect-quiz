@@ -1,6 +1,10 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "strict": true
+    "strict": true,
+    // The *.test.ts files are run directly by node, which resolves ESM
+    // specifiers literally and therefore needs the .ts extension spelled out.
+    "allowImportingTsExtensions": true,
+    "noEmit": true
   }
 }

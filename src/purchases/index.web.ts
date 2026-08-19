@@ -3,7 +3,11 @@
 // this is intentionally a no-op stub. It must still export the same surface as
 // index.ts or the web bundle breaks at import time.
 
-export type PurchaseErrorCode = 'cancelled' | 'not_configured' | 'no_offering' | 'unknown';
+// Re-exported from the shared logic module so the two entry points can never
+// drift apart on what a failure code is allowed to be.
+export type { PurchaseErrorCode } from './logic';
+
+type PurchaseErrorCode = import('./logic').PurchaseErrorCode;
 
 export async function initPurchases(): Promise<void> {}
 

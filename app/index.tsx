@@ -11,6 +11,7 @@ import {
   purchaseRemoveAds,
   restorePurchases,
 } from '../src/purchases';
+import { describePurchaseOutcome, shouldShowPurchaseControls } from '../src/purchases/logic';
 import AdBanner from '../src/ads/AdBanner';
 import { TakoyakiMascot, OsakaCastle, WordMascot } from '../src/components/illustrations';
 import { mascots } from '../src/components/illustrations/mascots';
@@ -23,6 +24,11 @@ export default function Home() {
   const router = useRouter();
   const adFree = useAdFree();
   const purchaseAvailable = usePurchaseAvailable();
+  const showPurchaseControls = shouldShowPurchaseControls({
+    platformOS: Platform.OS,
+    purchaseAvailable,
+    adFree,
+  });
   const [best, setBest] = useState<BestResult | null>(null);
   const [purchasing, setPurchasing] = useState(false);
 
@@ -42,17 +48,20 @@ export default function Home() {
     setPurchasing(true);
     const res = await purchaseRemoveAds();
     setPurchasing(false);
-    if (res.success) {
-      Alert.alert(t('purchase.successTitle'), t('purchase.successBody'));
-      return;
+    const feedback = describePurchaseOutcome(res);
+    switch (feedback.kind) {
+      case 'success':
+        Alert.alert(t('purchase.successTitle'), t('purchase.successBody'));
+        return;
+      case 'silent': // user backed out on purpose
+        return;
+      case 'unavailable':
+        Alert.alert(t('purchase.errorTitle'), t('purchase.unavailable'));
+        return;
+      case 'error':
+        Alert.alert(t('purchase.errorTitle'), t('purchase.error'));
+        return;
     }
-    if (res.error === 'cancelled') return; // user backed out on purpose
-    Alert.alert(
-      t('purchase.errorTitle'),
-      res.error === 'not_configured' || res.error === 'no_offering'
-        ? t('purchase.unavailable')
-        : t('purchase.error'),
-    );
   }, [t]);
 
   const handleRestore = useCallback(async () => {
@@ -105,7 +114,7 @@ export default function Home() {
 
       {/* Only offer purchase controls once the store SDK is actually usable —
           never show a control that cannot do anything. */}
-      {Platform.OS !== 'web' && purchaseAvailable && !adFree && (
+      {showPurchaseControls && (
         <Pressable style={styles.secondaryButton} onPress={handleRemoveAds} disabled={purchasing}>
           <Text style={styles.secondaryButtonText}>
             {purchasing ? t('purchase.processing') : t('home.removeAds')}
@@ -113,7 +122,7 @@ export default function Home() {
         </Pressable>
       )}
       {adFree && <Text style={styles.adFreeLabel}>{t('home.adsRemoved')}</Text>}
-      {Platform.OS !== 'web' && purchaseAvailable && !adFree && (
+      {showPurchaseControls && (
         <Pressable onPress={handleRestore} disabled={purchasing} hitSlop={8}>
           <Text style={styles.restoreLink}>{t('home.restorePurchases')}</Text>
         </Pressable>

@@ -2,17 +2,18 @@ import { useSyncExternalStore } from 'react';
 import { Platform } from 'react-native';
 import Purchases, { type CustomerInfo, type PurchasesStoreProduct } from 'react-native-purchases';
 import { getPrefectureConfig } from '../prefectures';
+import { selectApiKey, pickPackage, pickProduct, classifyPurchaseError } from './logic';
 
 // Every failure mode is surfaced to the caller as a distinct code so the UI can
 // explain what happened. A silently-dead purchase button is an App Review
 // rejection under Guideline 2.1(b) — that is exactly what happened to the
 // 1.0 (build 3) submission, which shipped before the RevenueCat API keys were
 // added to EAS and therefore never configured the SDK at all.
-export type PurchaseErrorCode =
-  | 'cancelled'
-  | 'not_configured'
-  | 'no_offering'
-  | 'unknown';
+// The decision rules live in ./logic.ts, which is unit-tested; this file is only
+// the SDK plumbing around them.
+export type { PurchaseErrorCode } from './logic';
+
+type PurchaseErrorCode = import('./logic').PurchaseErrorCode;
 
 type PurchaseResult = { success: boolean; error?: PurchaseErrorCode; detail?: string };
 type RestoreResult = { success: boolean; restored: boolean; detail?: string };
@@ -34,7 +35,7 @@ function updateFromCustomerInfo(info: CustomerInfo) {
 
 export async function initPurchases(): Promise<void> {
   const pref = getPrefectureConfig();
-  const apiKey = Platform.OS === 'ios' ? pref.revenueCat.apiKeyIos : pref.revenueCat.apiKeyAndroid;
+  const apiKey = selectApiKey(Platform.OS, pref.revenueCat);
   if (!apiKey) {
     initFailure = 'missing_api_key';
     console.warn('[purchases] No RevenueCat API key configured for this build; remove-ads purchase is disabled.');
@@ -83,9 +84,7 @@ export async function purchaseRemoveAds(): Promise<PurchaseResult> {
     // product straight from the store, so a missing/misconfigured Offering
     // cannot leave the user with a dead button.
     const offerings = await Purchases.getOfferings();
-    const pkg =
-      offerings.current?.availablePackages.find((p) => p.product.identifier === pref.revenueCat.productId) ??
-      offerings.current?.availablePackages[0];
+    const pkg = pickPackage(offerings.current?.availablePackages, pref.revenueCat.productId);
 
     if (pkg) {
       const { customerInfo } = await Purchases.purchasePackage(pkg);
@@ -94,15 +93,14 @@ export async function purchaseRemoveAds(): Promise<PurchaseResult> {
     }
 
     const products: PurchasesStoreProduct[] = await Purchases.getProducts([pref.revenueCat.productId]);
-    const product = products.find((p) => p.identifier === pref.revenueCat.productId) ?? products[0];
+    const product = pickProduct(products, pref.revenueCat.productId);
     if (!product) return { success: false, error: 'no_offering' };
 
     const { customerInfo } = await Purchases.purchaseStoreProduct(product);
     updateFromCustomerInfo(customerInfo);
     return { success: true };
   } catch (e: any) {
-    if (e?.userCancelled) return { success: false, error: 'cancelled' };
-    return { success: false, error: 'unknown', detail: e?.message ?? String(e) };
+    return { success: false, error: classifyPurchaseError(e), detail: e?.message ?? String(e) };
   }
 }
 
