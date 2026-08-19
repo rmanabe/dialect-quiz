@@ -5,6 +5,11 @@
     // The *.test.ts files are run directly by node, which resolves ESM
     // specifiers literally and therefore needs the .ts extension spelled out.
     "allowImportingTsExtensions": true,
-    "noEmit": true
+    "noEmit": true,
+    // app.config.ts and the *.test.ts files run under node, not Metro. Listing
+    // the type packages explicitly keeps resolution identical everywhere —
+    // without this, the same tree typechecked on Windows and failed on Linux CI
+    // with every node builtin reported as unresolved.
+    "types": ["node", "react"]
   }
 }
