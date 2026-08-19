@@ -21,7 +21,7 @@ const saga = {
   appNameEn: 'Saga-ben Quiz',
   bundleId: 'com.robonetc.dialectquiz.saga',
   scheme: 'dialectquizsaga',
-  easProjectId: '',
+  easProjectId: '0019b2f0-212f-45da-beac-6ed270cb7ba8',
   theme: {
     primary: '#3E6B4F', // arita porcelain celadon green
     secondary: '#C94C4C', // saga nishiki red
