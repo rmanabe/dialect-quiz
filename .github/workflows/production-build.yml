@@ -1,0 +1,133 @@
+name: Production build (signed, no EAS credits)
+
+# Produces a *store-signed* build by running `eas build --local` on a GitHub
+# runner instead of EAS's cloud queue, so it never consumes the EAS free-tier
+# build credit pool (which is exhausted until the monthly reset).
+#
+# Signing material is not stored here: `eas build --local` pulls the
+# distribution certificate / provisioning profile (iOS) and the keystore
+# (Android) from EAS using EXPO_TOKEN, exactly like a cloud build would.
+#
+# EAS Submit is free and unlimited, so the optional submit step also costs
+# nothing. iOS submission uses the App Store Connect API key already stored on
+# EAS, so no interactive Apple login is needed.
+
+on:
+  workflow_dispatch:
+    inputs:
+      platform:
+        description: "Platform to build"
+        required: true
+        default: "ios"
+        type: choice
+        options: [ios, android, all]
+      prefecture:
+        description: "EXPO_PUBLIC_PREFECTURE value"
+        required: true
+        default: "osaka"
+      submit:
+        description: "Upload the build to the store after a successful build"
+        required: true
+        default: "false"
+        type: choice
+        options: ["false", "true"]
+
+jobs:
+  ios:
+    if: ${{ inputs.platform == 'ios' || inputs.platform == 'all' }}
+    runs-on: macos-latest
+    timeout-minutes: 90
+    env:
+      EXPO_PUBLIC_PREFECTURE: ${{ inputs.prefecture }}
+      EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install eas-cli
+        run: npm install -g eas-cli
+
+      # --profile production => distribution: store, so this is a signed .ipa
+      # suitable for App Store Connect. Build number auto-increments on EAS
+      # because eas.json sets appVersionSource: remote + autoIncrement.
+      - name: Build iOS (signed, local, no EAS credits)
+        run: |
+          eas build --local \
+            --platform ios \
+            --profile production \
+            --non-interactive \
+            --output=./dialect-quiz-${{ inputs.prefecture }}.ipa
+
+      - name: Upload .ipa artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-production-${{ inputs.prefecture }}
+          path: ./dialect-quiz-${{ inputs.prefecture }}.ipa
+          retention-days: 14
+
+      - name: Submit to App Store Connect
+        if: ${{ inputs.submit == 'true' }}
+        run: |
+          eas submit --platform ios \
+            --profile production \
+            --path ./dialect-quiz-${{ inputs.prefecture }}.ipa \
+            --non-interactive
+
+  android:
+    if: ${{ inputs.platform == 'android' || inputs.platform == 'all' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      EXPO_PUBLIC_PREFECTURE: ${{ inputs.prefecture }}
+      EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install eas-cli
+        run: npm install -g eas-cli
+
+      # Produces a signed .aab (Play requires app bundles for new releases).
+      - name: Build Android (signed, local, no EAS credits)
+        run: |
+          eas build --local \
+            --platform android \
+            --profile production \
+            --non-interactive \
+            --output=./dialect-quiz-${{ inputs.prefecture }}.aab
+
+      - name: Upload .aab artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-production-${{ inputs.prefecture }}
+          path: ./dialect-quiz-${{ inputs.prefecture }}.aab
+          retention-days: 14
+
+      # NOTE: as of 2026-08-19 no "Google service account key for EAS Submit" is
+      # stored on EAS for this project, so this step will fail until one is
+      # added. The .aab artifact above can be uploaded to Play Console by hand
+      # in the meantime.
+      - name: Submit to Google Play
+        if: ${{ inputs.submit == 'true' }}
+        run: |
+          eas submit --platform android \
+            --profile production \
+            --path ./dialect-quiz-${{ inputs.prefecture }}.aab \
+            --non-interactive
