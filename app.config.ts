@@ -2,6 +2,12 @@ import fs from 'fs';
 import path from 'path';
 import type { ExpoConfig, ConfigContext } from 'expo/config';
 import { getPrefectureConfig } from './src/prefectures/index.js';
+// .js, like ./src/prefectures/index.js — Expo require()s this config under Node
+// and does not transpile what it imports, so a nested .ts import cannot resolve.
+import {
+  findProductionConfigProblems,
+  productionConfigErrorMessage,
+} from './src/config/productionGuard.js';
 
 const pref = getPrefectureConfig();
 
@@ -20,25 +26,13 @@ const iconDir = fs.existsSync(path.join(__dirname, 'assets', 'prefectures', pref
 // Guideline 2.1(b). Nothing in the build surfaced the problem. Fail loudly here
 // instead — a broken paid feature is far more expensive than a failed build.
 if (process.env.EAS_BUILD_PROFILE === 'production') {
-  const missing = [
-    ['EXPO_PUBLIC_REVENUECAT_IOS_KEY', pref.revenueCat.apiKeyIos],
-    ['EXPO_PUBLIC_REVENUECAT_ANDROID_KEY', pref.revenueCat.apiKeyAndroid],
-    ['EXPO_PUBLIC_ADMOB_IOS_APP_ID', process.env.EXPO_PUBLIC_ADMOB_IOS_APP_ID],
-    ['EXPO_PUBLIC_ADMOB_ANDROID_APP_ID', process.env.EXPO_PUBLIC_ADMOB_ANDROID_APP_ID],
-    ['EXPO_PUBLIC_ADMOB_IOS_BANNER_ID', process.env.EXPO_PUBLIC_ADMOB_IOS_BANNER_ID],
-    ['EXPO_PUBLIC_ADMOB_ANDROID_BANNER_ID', process.env.EXPO_PUBLIC_ADMOB_ANDROID_BANNER_ID],
-  ]
-    .filter(([, value]) => !value)
-    .map(([name]) => name);
-
-  if (missing.length > 0) {
-    throw new Error(
-      `[app.config] Production build for "${pref.id}" is missing required env vars: ` +
-        `${missing.join(', ')}.\n` +
-        'Without these the app ships with Google test ad units and a dead ' +
-        'remove-ads button. Set them on the EAS project (production ' +
-        'environment) with `eas env:create` and rebuild.',
-    );
+  const problems = findProductionConfigProblems({
+    prefectureId: pref.id,
+    revenueCat: pref.revenueCat,
+    env: process.env,
+  });
+  if (problems.length > 0) {
+    throw new Error(productionConfigErrorMessage(pref.id, problems));
   }
 }
 
