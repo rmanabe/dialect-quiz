@@ -1,6 +1,6 @@
 import { useSyncExternalStore } from 'react';
 import { Platform } from 'react-native';
-import Purchases, { type CustomerInfo, type PurchasesStoreProduct } from 'react-native-purchases';
+import type { CustomerInfo, PurchasesStoreProduct } from 'react-native-purchases';
 import { getPrefectureConfig } from '../prefectures';
 import { selectApiKey, pickPackage, pickProduct, classifyPurchaseError } from './logic';
 
@@ -17,6 +17,26 @@ type PurchaseErrorCode = import('./logic').PurchaseErrorCode;
 
 type PurchaseResult = { success: boolean; error?: PurchaseErrorCode; detail?: string };
 type RestoreResult = { success: boolean; restored: boolean; detail?: string };
+
+// Loaded on demand, not at import time. A top-level import is evaluated before
+// any of our code runs, so a native module that fails to register would take
+// the whole app down at startup rather than just disabling the purchase. The
+// remove-ads button is not worth the app.
+type PurchasesSdk = typeof import('react-native-purchases').default;
+
+// undefined = not attempted yet, null = attempted and unavailable.
+let sdkCache: PurchasesSdk | null | undefined;
+
+function getPurchasesSdk(): PurchasesSdk | null {
+  if (sdkCache !== undefined) return sdkCache;
+  try {
+    sdkCache = require('react-native-purchases').default as PurchasesSdk;
+  } catch (e) {
+    console.warn('[purchases] native module unavailable; purchases are disabled', e);
+    sdkCache = null;
+  }
+  return sdkCache;
+}
 
 let currentIsAdFree = false;
 let configured = false;
@@ -39,6 +59,12 @@ export async function initPurchases(): Promise<void> {
   if (!apiKey) {
     initFailure = 'missing_api_key';
     console.warn('[purchases] No RevenueCat API key configured for this build; remove-ads purchase is disabled.');
+    notify();
+    return;
+  }
+  const Purchases = getPurchasesSdk();
+  if (!Purchases) {
+    initFailure = 'sdk_unavailable';
     notify();
     return;
   }
@@ -75,7 +101,8 @@ export function getInitFailure(): string | null {
 }
 
 export async function purchaseRemoveAds(): Promise<PurchaseResult> {
-  if (!configured) {
+  const Purchases = getPurchasesSdk();
+  if (!configured || !Purchases) {
     return { success: false, error: 'not_configured', detail: initFailure ?? undefined };
   }
   const pref = getPrefectureConfig();
@@ -105,7 +132,8 @@ export async function purchaseRemoveAds(): Promise<PurchaseResult> {
 }
 
 export async function restorePurchases(): Promise<RestoreResult> {
-  if (!configured) {
+  const Purchases = getPurchasesSdk();
+  if (!configured || !Purchases) {
     return { success: false, restored: false, detail: initFailure ?? 'not_configured' };
   }
   try {

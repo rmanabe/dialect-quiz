@@ -6,12 +6,19 @@ import { StatusBar } from 'expo-status-bar';
 import { initI18n } from '../src/i18n';
 import { initAds } from '../src/ads/initAds';
 import { initPurchases } from '../src/purchases';
+import ErrorBoundary from '../src/components/ErrorBoundary';
 
 export default function RootLayout() {
   const [i18nReady, setI18nReady] = useState(false);
 
   useEffect(() => {
-    initI18n().then(() => setI18nReady(true));
+    // Render either way. This used to be a bare .then(): if initI18n() ever
+    // rejected, i18nReady stayed false and the app sat on the spinner forever
+    // — an app that never finishes loading, which is both a dead end for the
+    // user and a rejection for App Review. Untranslated keys beat that.
+    initI18n()
+      .catch((e) => console.warn('[i18n] init failed; rendering anyway', e))
+      .finally(() => setI18nReady(true));
     // Ads/purchases init independently; screens degrade gracefully while pending.
     initAds().catch((e) => console.warn('[ads] init failed', e));
     initPurchases().catch((e) => console.warn('[purchases] init failed', e));
@@ -26,10 +33,12 @@ export default function RootLayout() {
   }
 
   return (
-    <SafeAreaProvider>
-      <StatusBar style="dark" />
-      <Stack screenOptions={{ headerShown: false }} />
-    </SafeAreaProvider>
+    <ErrorBoundary>
+      <SafeAreaProvider>
+        <StatusBar style="dark" />
+        <Stack screenOptions={{ headerShown: false }} />
+      </SafeAreaProvider>
+    </ErrorBoundary>
   );
 }
 
