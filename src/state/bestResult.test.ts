@@ -134,6 +134,28 @@ test('an unreadable stale record is replaced by the next result', async () => {
   assert.deepEqual(await getBestResult('osaka'), { score: 4, title: 'fresh' });
 });
 
+// --- scores that are not real numbers ---------------------------------------
+
+test('a NaN score is refused instead of written as an unreadable record', async () => {
+  // result.tsx does Number(params.score), so a deep link with a junk score
+  // reaches here as NaN. Left unguarded it stores {"score":null}, which the
+  // validator then rejects on read — a record that exists but never loads.
+  await saveBestResultIfHigher('osaka', { score: NaN, title: 'junk' });
+  assert.equal(store.size, 0);
+  assert.equal(await getBestResult('osaka'), null);
+});
+
+test('Infinity is refused too', async () => {
+  await saveBestResultIfHigher('osaka', { score: Infinity, title: 'junk' });
+  assert.equal(store.size, 0);
+});
+
+test('a junk score cannot displace a real best score', async () => {
+  await saveBestResultIfHigher('osaka', { score: 9, title: 'real' });
+  await saveBestResultIfHigher('osaka', { score: NaN, title: 'junk' });
+  assert.deepEqual(await getBestResult('osaka'), { score: 9, title: 'real' });
+});
+
 // --- storage failures -------------------------------------------------------
 
 test('a read failure reads as null rather than crashing the home screen', async () => {

@@ -26,6 +26,12 @@ export async function getBestResult(prefectureId: string): Promise<BestResult | 
 }
 
 export async function saveBestResultIfHigher(prefectureId: string, result: BestResult): Promise<void> {
+  // The result screen derives its score from a URL param, so a deep link like
+  // dialectquizosaka://result?score=abc arrives here as NaN. JSON.stringify
+  // turns that into {"score":null}, which the validator then rejects on the
+  // way back out — a record that exists but can never be read. Refuse it here
+  // instead of writing garbage.
+  if (!Number.isFinite(result.score)) return;
   try {
     const existing = await getBestResult(prefectureId);
     if (!existing || result.score > existing.score) {
