@@ -1,6 +1,7 @@
 import { Component, type ErrorInfo, type ReactNode } from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { getPrefectureConfig } from '../prefectures';
+import { errorScreenTheme } from './errorScreenTheme';
 
 // Without this, any render error anywhere in the tree takes the whole app down
 // — the user sees a crash, and App Review sees an app that quits. With it they
@@ -38,17 +39,10 @@ export default class ErrorBoundary extends Component<Props, State> {
     const { error } = this.state;
     if (!error) return this.props.children;
 
-    // getPrefectureConfig() is a plain object lookup, but this screen exists
-    // precisely because things go wrong, so don't let it be the thing that does.
-    let background = '#FFF8ED';
-    let primary = '#E8572B';
-    try {
-      const theme = getPrefectureConfig().theme;
-      background = theme.background;
-      primary = theme.primary;
-    } catch {
-      // keep the defaults
-    }
+    // Guarded and tested in errorScreenTheme: this screen exists precisely
+    // because things go wrong, so reading the theme must not be the next thing
+    // that does.
+    const { background, primary } = errorScreenTheme(() => getPrefectureConfig().theme);
 
     return (
       <View style={[styles.container, { backgroundColor: background }]}>
