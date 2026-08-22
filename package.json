@@ -35,6 +35,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "store-status": "node scripts/store-status.mjs",
+    "preflight": "node scripts/preflight.mjs",
     "typecheck": "tsc --noEmit",
     "test": "node --test --experimental-strip-types --experimental-test-module-mocks \"src/**/*.test.ts\" \"scripts/**/*.test.mjs\"",
     "check": "npm run typecheck && npm run test"
