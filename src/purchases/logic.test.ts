@@ -6,6 +6,7 @@ import {
   pickProduct,
   classifyPurchaseError,
   describePurchaseOutcome,
+  describeRestoreOutcome,
   shouldShowPurchaseControls,
   shouldShowPrice,
 } from './logic.ts';
@@ -150,4 +151,37 @@ test('shouldShowPrice refuses when either currency is unknown', () => {
   assert.equal(shouldShowPrice(null, 'JPY'), false);
   assert.equal(shouldShowPrice('JPY', undefined), false);
   assert.equal(shouldShowPrice('', 'JPY'), false);
+});
+
+// --- restore ----------------------------------------------------------------
+//
+// Found by installing the release build on an emulator and pressing the link:
+// a failed restore answered with the purchase wording, telling the user their
+// purchase could not be started when they had asked to restore one.
+
+test('a restore that found a purchase says so', () => {
+  assert.deepEqual(describeRestoreOutcome({ success: true, restored: true }), {
+    kind: 'restored',
+  });
+});
+
+test('a restore that found nothing is not an error', () => {
+  assert.deepEqual(describeRestoreOutcome({ success: true, restored: false }), {
+    kind: 'nothing-to-restore',
+  });
+});
+
+test('a failed restore is its own outcome, not a purchase failure', () => {
+  assert.deepEqual(describeRestoreOutcome({ success: false, restored: false }), {
+    kind: 'failed',
+  });
+});
+
+test('a failed restore stays failed even if restored somehow says true', () => {
+  // success is the only field that decides; a stale restored flag must not
+  // promote a failure into "purchase restored", which would hide the ads the
+  // user is still going to see.
+  assert.deepEqual(describeRestoreOutcome({ success: false, restored: true }), {
+    kind: 'failed',
+  });
 });

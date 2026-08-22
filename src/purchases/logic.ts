@@ -89,6 +89,29 @@ export function describePurchaseOutcome(outcome: PurchaseOutcome): PurchaseFeedb
   return { kind: 'error' };
 }
 
+/** What a restore attempt should tell the user. */
+export type RestoreFeedback =
+  | { kind: 'restored' }
+  | { kind: 'nothing-to-restore' }
+  | { kind: 'failed' };
+
+/**
+ * Maps a restore result to what the user should see.
+ *
+ * Restore has its own wording for a reason: a failed restore used to reuse the
+ * purchase strings, so tapping 購入を復元 with no connection answered "your
+ * purchase could not be started" — about an action the user did not take.
+ * Restoring is also the one control App Review is guaranteed to press on a
+ * non-consumable (Guideline 3.1.2), so what it says has to make sense.
+ */
+export function describeRestoreOutcome(outcome: {
+  success: boolean;
+  restored: boolean;
+}): RestoreFeedback {
+  if (!outcome.success) return { kind: 'failed' };
+  return outcome.restored ? { kind: 'restored' } : { kind: 'nothing-to-restore' };
+}
+
 /**
  * Whether to render the buy / restore controls. Web has no store, an
  * unconfigured SDK cannot transact, and someone who already paid should not be

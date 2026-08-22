@@ -11,7 +11,11 @@ import {
   purchaseRemoveAds,
   restorePurchases,
 } from '../src/purchases';
-import { describePurchaseOutcome, shouldShowPurchaseControls } from '../src/purchases/logic';
+import {
+  describePurchaseOutcome,
+  describeRestoreOutcome,
+  shouldShowPurchaseControls,
+} from '../src/purchases/logic';
 import AdBanner from '../src/ads/AdBanner';
 import { TakoyakiMascot, OsakaCastle, WordMascot } from '../src/components/illustrations';
 import { mascots } from '../src/components/illustrations/mascots';
@@ -64,18 +68,20 @@ export default function Home() {
     }
   }, [t]);
 
+  // Restore speaks about restoring, not about buying: this used to answer a
+  // failed restore with the purchase strings, so 購入を復元 replied "your
+  // purchase could not be started" about an action the user never took.
   const handleRestore = useCallback(async () => {
     setPurchasing(true);
     const res = await restorePurchases();
     setPurchasing(false);
-    if (!res.success) {
-      Alert.alert(t('purchase.errorTitle'), t('purchase.unavailable'));
-      return;
-    }
-    Alert.alert(
-      t('purchase.restoreTitle'),
-      res.restored ? t('purchase.restoreSuccess') : t('purchase.restoreNone'),
-    );
+    const feedback = describeRestoreOutcome(res);
+    const body = {
+      restored: 'purchase.restoreSuccess',
+      'nothing-to-restore': 'purchase.restoreNone',
+      failed: 'purchase.restoreError',
+    }[feedback.kind];
+    Alert.alert(t('purchase.restoreTitle'), t(body));
   }, [t]);
 
   return (
