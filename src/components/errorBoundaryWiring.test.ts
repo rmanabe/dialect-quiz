@@ -37,6 +37,16 @@ test('the root layout wraps the navigation tree in the ErrorBoundary', () => {
   assert.ok(open < stack && stack < close, '<Stack> is not inside <ErrorBoundary>');
 });
 
+test('the status bar is set outside the boundary, so the crash screen keeps it', () => {
+  // Inside, it belongs to the subtree the boundary replaces: the crash screen
+  // then renders with light status bar content over a cream background and the
+  // clock is unreadable. Verified on a device by throwing on purpose.
+  const statusBar = layout.indexOf('<StatusBar');
+  const boundary = layout.indexOf('<ErrorBoundary>');
+  assert.ok(statusBar !== -1, 'no <StatusBar> in app/_layout.tsx');
+  assert.ok(statusBar < boundary, '<StatusBar> is inside <ErrorBoundary>');
+});
+
 test('the boundary still catches render errors', () => {
   // Without this static React never switches the component into its fallback.
   assert.match(boundary, /static\s+getDerivedStateFromError/);

@@ -33,12 +33,19 @@ export default function RootLayout() {
   }
 
   return (
-    <ErrorBoundary>
-      <SafeAreaProvider>
-        <StatusBar style="dark" />
-        <Stack screenOptions={{ headerShown: false }} />
-      </SafeAreaProvider>
-    </ErrorBoundary>
+    // StatusBar sits outside the boundary on purpose. Inside, it is part of the
+    // subtree the boundary replaces, so the crash screen lost it and Android
+    // fell back to light status bar content — white text on a cream background,
+    // where the clock and battery are barely readable. Found by throwing on
+    // purpose and looking at the screen; nothing else would have shown it.
+    <>
+      <StatusBar style="dark" />
+      <ErrorBoundary>
+        <SafeAreaProvider>
+          <Stack screenOptions={{ headerShown: false }} />
+        </SafeAreaProvider>
+      </ErrorBoundary>
+    </>
   );
 }
 
